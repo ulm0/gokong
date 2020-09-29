@@ -113,7 +113,7 @@ func (aclClient *AclClient) ListFiltered(filter *AclFilter) (*Acls, error) {
 
 func (aclClient *AclClient) Create(consumerId string, newAcl *AclRequest) (*Acl, error) {
 
-	r, body, errs := newPost(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath)).Send(newAcl).End()
+	r, body, errs := newPost(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath).Send(newAcl).End()
 	if errs != nil {
 		return nil, fmt.Errorf("could not create new acl, error: %v", errs)
 	}
