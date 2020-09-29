@@ -70,7 +70,7 @@ func (aclClient *AclClient) GetConsumerPerAcl(aclId string) (*Consumer, error) {
 	return consumer, nil
 }
 
-func (aclClient *AclClient) GetAclsPerConsumer(consumerId string) ([]*Acl, error) {
+func (aclClient *AclClient) GetAclsPerConsumer(consumerId string) (*Acls, error) {
 	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath).End()
 
 	if errs != nil {
@@ -81,8 +81,8 @@ func (aclClient *AclClient) GetAclsPerConsumer(consumerId string) ([]*Acl, error
 		return nil, fmt.Errorf("not authorised, message from kong: %s", body)
 	}
 
-	acls := []*Acl{}
-	err := json.Unmarshal([]byte(body), &acls)
+	acls := &Acls{}
+	err := json.Unmarshal([]byte(body), acls)
 	if err != nil {
 		return nil, fmt.Errorf("could not parse acl get response, error: %v", err)
 	}
