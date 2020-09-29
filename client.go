@@ -98,7 +98,7 @@ func (kongAdminClient *KongAdminClient) Status() *StatusClient {
 }
 
 func (kongAdminClient *KongAdminClient) Acls() *AclClient {
-	return &ApiClient{
+	return &AclClient{
 		config: kongAdminClient.config,
 	}
 }
