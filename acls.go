@@ -63,7 +63,7 @@ func (aclClient *AclClient) GetConsumerPerAcl(id string) (*Consumer, error) {
 		return nil, fmt.Errorf("could not parse acl get response, error: %v", err)
 	}
 
-	if consumer.Id == nil {
+	if consumer.Id == "" {
 		return nil, nil
 	}
 
