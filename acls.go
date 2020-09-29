@@ -46,8 +46,28 @@ type AclFilter struct {
 
 const AclsPath = "/acls/"
 
-func (aclClient *AclClient) GetConsumerPerAcl(id string) (*Acl, error) {
-	return aclClient.GetById(id)
+func (aclClient *AclClient) GetConsumerPerAcl(id string) (*Consumer, error) {
+	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+AclsPath+id+"/consumer").End()
+
+	if errs != nil {
+		return nil, fmt.Errorf("could not get acl consumer, error: %v", errs)
+	}
+
+	if r.StatusCode == 401 || r.StatusCode == 403 {
+		return nil, fmt.Errorf("not authorised, message from kong: %s", body)
+	}
+
+	consumer := &Consumer{}
+	err := json.Unmarshal([]byte(body), consumer)
+	if err != nil {
+		return nil, fmt.Errorf("could not parse acl get response, error: %v", err)
+	}
+
+	if consumer.Id == nil {
+		return nil, nil
+	}
+
+	return consumer, nil
 }
 
 func (aclClient *AclClient) GetById(id string) (*Acl, error) {
