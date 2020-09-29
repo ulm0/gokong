@@ -9,21 +9,9 @@ type AclClient struct {
 	config *Config
 }
 
-// type AclRequest struct {
-// 	Name                   *string   `json:"name"`
-// 	Hosts                  []*string `json:"hosts"`
-// 	Uris                   []*string `json:"uris"`
-// 	Methods                []*string `json:"methods"`
-// 	UpstreamUrl            *string   `json:"upstream_url"`
-// 	StripUri               *bool     `json:"strip_uri,omitempty"`
-// 	PreserveHost           *bool     `json:"preserve_host,omitempty"`
-// 	Retries                *int      `json:"retries,omitempty"`
-// 	UpstreamConnectTimeout *int      `json:"upstream_connect_timeout,omitempty"`
-// 	UpstreamSendTimeout    *int      `json:"upstream_send_timeout,omitempty"`
-// 	UpstreamReadTimeout    *int      `json:"upstream_read_timeout,omitempty"`
-// 	HttpsOnly              *bool     `json:"https_only,omitempty"`
-// 	HttpIfTerminated       *bool     `json:"http_if_terminated,omitempty"`
-// }
+type AclRequest struct {
+	Group *string `json:"group"`
+}
 
 type Acl struct {
 	Id         *string `json:"id"`
@@ -123,33 +111,33 @@ func (aclClient *AclClient) ListFiltered(filter *AclFilter) (*Acls, error) {
 	return acls, nil
 }
 
-// func (aclClient *AclClient) Create(newAcl *AclRequest) (*Acl, error) {
+func (aclClient *AclClient) Create(newAcl *AclRequest) (*Acl, error) {
 
-// 	r, body, errs := newPost(aclClient.config, aclClient.config.HostAddress+ApisPath).Send(newAcl).End()
-// 	if errs != nil {
-// 		return nil, fmt.Errorf("could not create new api, error: %v", errs)
-// 	}
+	r, body, errs := newPost(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath)).Send(newAcl).End()
+	if errs != nil {
+		return nil, fmt.Errorf("could not create new acl, error: %v", errs)
+	}
 
-// 	if r.StatusCode == 401 || r.StatusCode == 403 {
-// 		return nil, fmt.Errorf("not authorised, message from kong: %s", body)
-// 	}
+	if r.StatusCode == 401 || r.StatusCode == 403 {
+		return nil, fmt.Errorf("not authorised, message from kong: %s", body)
+	}
 
-// 	createdApi := &Api{}
-// 	err := json.Unmarshal([]byte(body), createdApi)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("could not parse api creation response, error: %v %s", err, body)
-// 	}
+	createdAcl := &Acl{}
+	err := json.Unmarshal([]byte(body), createdAcl)
+	if err != nil {
+		return nil, fmt.Errorf("could not parse acl creation response, error: %v %s", err, body)
+	}
 
-// 	if createdApi.Id == nil {
-// 		return nil, fmt.Errorf("could not create api, error: %v", body)
-// 	}
+	if createdAcl.Id == nil {
+		return nil, fmt.Errorf("could not create acl, error: %v", body)
+	}
 
-// 	return createdApi, nil
-// }
+	return createdAcl, nil
+}
 
-// func (aclClient *AclClient) DeleteByName(name string) error {
-// 	return aclClient.DeleteById(name)
-// }
+func (aclClient *AclClient) DeleteByName(name string) error {
+	return aclClient.DeleteById(name)
+}
 
 // func (aclClient *AclClient) DeleteById(id string) error {
 
