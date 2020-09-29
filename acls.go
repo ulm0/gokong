@@ -91,7 +91,7 @@ func (aclClient *AclClient) GetAclsPerConsumer(consumerId string) ([]*Acl, error
 	// 	return nil, nil
 	// }
 
-	return acls, nil
+	return &acls, nil
 }
 
 func (aclClient *AclClient) List() (*Acls, error) {
