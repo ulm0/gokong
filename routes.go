@@ -10,6 +10,7 @@ type RouteClient struct {
 }
 
 type RouteRequest struct {
+	Name         *string             `json:"name"`
 	Protocols    []*string           `json:"protocols"`
 	Methods      []*string           `json:"methods"`
 	Hosts        []*string           `json:"hosts"`
@@ -25,6 +26,7 @@ type RouteServiceObject struct {
 
 type Route struct {
 	Id            *string             `json:"id"`
+	Name          *string             `json:"name"`
 	CreatedAt     *int                `json:"created_at"`
 	UpdatedAt     *int                `json:"updated_at"`
 	Protocols     []*string           `json:"protocols"`
