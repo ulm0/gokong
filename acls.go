@@ -135,9 +135,9 @@ func (aclClient *AclClient) Create(consumerId string, newAcl *AclRequest) (*Acl,
 	return createdAcl, nil
 }
 
-func (aclClient *AclClient) DeleteByName(name string) error {
-	return aclClient.DeleteById(name)
-}
+// func (aclClient *AclClient) DeleteByName(name string) error {
+// 	return aclClient.DeleteById(name)
+// }
 
 // func (aclClient *AclClient) DeleteById(id string) error {
 
