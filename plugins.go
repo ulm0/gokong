@@ -11,10 +11,10 @@ type PluginClient struct {
 
 type PluginRequest struct {
 	Name       string                 `json:"name"`
-	ApiId      string                 `json:"api_id,omitempty"`
-	ConsumerId string                 `json:"consumer_id,omitempty"`
-	ServiceId  string                 `json:"service_id,omitempty"`
-	RouteId    string                 `json:"route_id,omitempty"`
+	ApiId      string                 `json:"api,omitempty"`
+	ConsumerId string                 `json:"consumer,omitempty"`
+	ServiceId  string                 `json:"service,omitempty"`
+	RouteId    string                 `json:"route,omitempty"`
 	Config     map[string]interface{} `json:"config,omitempty"`
 }
 
