@@ -46,8 +46,8 @@ type AclFilter struct {
 
 const AclsPath = "/acls/"
 
-func (aclClient *AclClient) GetConsumerPerAcl(id string) (*Consumer, error) {
-	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+AclsPath+id+"/consumer").End()
+func (aclClient *AclClient) GetConsumerPerAcl(aclId string) (*Consumer, error) {
+	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+AclsPath+aclId+"/consumer").End()
 
 	if errs != nil {
 		return nil, fmt.Errorf("could not get acl consumer, error: %v", errs)
@@ -70,26 +70,26 @@ func (aclClient *AclClient) GetConsumerPerAcl(id string) (*Consumer, error) {
 	return consumer, nil
 }
 
-func (aclClient *AclClient) GetById(id string) (*Acl, error) {
-	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+AclsPath+id+"/consumer").End()
+func (aclClient *AclClient) GetAclsPerConsumer(consumerId string) ([]*Acl, error) {
+	r, body, errs := newGet(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath).End()
 
 	if errs != nil {
-		return nil, fmt.Errorf("could not get acl consumer, error: %v", errs)
+		return nil, fmt.Errorf("could not get acls for consumer, error: %v", errs)
 	}
 
 	if r.StatusCode == 401 || r.StatusCode == 403 {
 		return nil, fmt.Errorf("not authorised, message from kong: %s", body)
 	}
 
-	acl := &Acl{}
-	err := json.Unmarshal([]byte(body), acl)
+	acls := []&Acl{}
+	err := json.Unmarshal([]byte(body), acls)
 	if err != nil {
 		return nil, fmt.Errorf("could not parse acl get response, error: %v", err)
 	}
 
-	if acl.Id == nil {
-		return nil, nil
-	}
+	// if acls. == nil {
+	// 	return nil, nil
+	// }
 
 	return acl, nil
 }
