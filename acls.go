@@ -111,7 +111,7 @@ func (aclClient *AclClient) ListFiltered(filter *AclFilter) (*Acls, error) {
 	return acls, nil
 }
 
-func (aclClient *AclClient) Create(newAcl *AclRequest) (*Acl, error) {
+func (aclClient *AclClient) Create(consumerId string, newAcl *AclRequest) (*Acl, error) {
 
 	r, body, errs := newPost(aclClient.config, aclClient.config.HostAddress+ConsumersPath+consumerId+AclsPath)).Send(newAcl).End()
 	if errs != nil {
