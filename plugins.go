@@ -16,6 +16,7 @@ type PluginRequest struct {
 	Service  *ServicePluginObject   `json:"service,omitempty"`
 	Route    *RoutePluginObject     `json:"route,omitempty"`
 	Config   map[string]interface{} `json:"config,omitempty"`
+	Enabled  bool                   `json:"enabled,omitempty"`
 }
 
 type RoutePluginObject struct {
