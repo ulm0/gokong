@@ -39,7 +39,7 @@ type Plugin struct {
 	ServiceId  string                 `json:"service_id,omitempty"`
 	RouteId    string                 `json:"route_id,omitempty"`
 	Config     map[string]interface{} `json:"config,omitempty"`
-	Enabled    bool                   `json:"enabled,omitempty"`
+	Enabled    *bool                  `json:"enabled,omitempty"`
 }
 
 type Plugins struct {
